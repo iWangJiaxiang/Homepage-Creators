@@ -44,28 +44,6 @@ id = "5c123448-a501-444c-830a-e55df930cd4a"
 # js 加载地址
 js = "/path/to/script.js"
 
-[extra.nav]
-
-[extra.nav.message]
-enable = true
-# support inline html
-text = "🎉 访问作者博客"
-url = "https://blog.jiaxiang.wang"
-
-[extra.nav.center]
-menus = [
-    { name = "主页", url = "主页", internal = true},
-    { name = "主题", url = "主题", internal = true},
-    { name = "博客", url = "博客", internal = true},
-    { name = "媒体", url = "媒体", internal = true},
-    { name = "项目", url = "https://blog.jiaxiang.wang/tags/project/", internal = false},
-]
-
-[extra.nav.right]
-menus = [
-    { name = "作者博客", url = "https://blog.jiaxiang.wang", internal = false},
-    { name = "作者 Github", url = "https://github.com/iWangJiaxiang", internal = false},
-]
 
 # 其他设置
 [extra.other]
