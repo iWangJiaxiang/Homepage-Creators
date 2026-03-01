@@ -1,10 +1,15 @@
+{# 读取 i18n 字符串 #}
+{% if section.extra.i18n is defined %}
+    {% set i18n = section.extra.i18n %}
+{% endif %}
+
 {% set start = config.extra.site.start_year | int %}
 {% set current = now() | date(format="%Y") | int %}
 <div class="footer">
     <div class="footer-content need-padding">
-      <span class="info inline-word">Copyright © <span class="inline-word" id="copyright-info">{% if start != current %}{{ start }} - {% endif %}{{ current }}</span>{{ config.author }} 保留所有权利。</span>
+      <span class="info inline-word">Copyright © <span class="inline-word" id="copyright-info">{% if start != current %}{{ start }} - {% endif %}{{ current }}</span>{{ config.author }}{% if i18n is defined %} {{ i18n.all_rights_reserved }}{% else %} All rights reserved. {% endif %}</span>
       <div class="info-group">
-        <a class="info" href="mailto:{{ config.extra.site.mail }}">联系邮箱：{{ config.extra.site.mail }}</a>
+        <a class="info" href="mailto:{{ config.extra.site.mail }}">{% if i18n is defined %}{{ i18n.contact_email }}{% else %}Email{% endif %}：{{ config.extra.site.mail }}</a>
       </div>
       <div class="info-group">
         {% if config.extra.site.compliance_security and config.extra.site.compliance_security_link %}
@@ -16,7 +21,7 @@
         {% if config.extra.site.compliance_icp %}
         <a class="info" href="https://beian.miit.gov.cn/" target="_blank">{{ config.extra.site.compliance_icp }}</a>
         {% endif %}
-        <a class="info" href="https://github.com/iWangJiaxiang/Homepage-Creators" target="_blank">主题：Homepage Creators</a>
+        <a class="info" href="https://github.com/iWangJiaxiang/Homepage-Creators" target="_blank">{% if i18n is defined %}{{ i18n.theme_label }}{% else %}Theme{% endif %}：Homepage Creators</a>
       </div>
     </div>
 </div>

@@ -2,6 +2,11 @@
 {# bio #}
 {# item: title, bio,  url, logo, hot, new #}
 {% macro product_list(value) %}
+{# 读取 i18n 字符串 #}
+{% if section.extra.i18n is defined %}
+    {% set i18n = section.extra.i18n %}
+{% endif %}
+
 <div class="product-group need-padding" id="{{ value.title }}">
     <h2 class="group-title">{{ value.title | safe }}</h2>
     <span class="group-description">{{ value.bio | safe }}</span>
@@ -14,7 +19,7 @@
         </a>
         <div class="group-info-group">
           <div class="group-info">
-            <a class="title" href="{{ item.url | safe }}" target="_blank">{{ item.title | safe }}{% if item.hot %}<sup class="hot">热门</sup>{% endif %}{% if item.new %}<sup class="new">最新</sup>{% endif %}</a>
+            <a class="title" href="{{ item.url | safe }}" target="_blank">{{ item.title | safe }}{% if item.hot %}<sup class="hot">{% if i18n is defined %}{{ i18n.hot }}{% else %}Hot{% endif %}</sup>{% endif %}{% if item.new %}<sup class="new">{% if i18n is defined %}{{ i18n.new }}{% else %}New{% endif %}</sup>{% endif %}</a>
             <a class="discription" href="{{ item.url | safe }}" target="_blank">{{ item.bio | safe }}</a>
           </div>
           <div class="group-info-button">

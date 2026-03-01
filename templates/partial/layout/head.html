@@ -12,3 +12,19 @@
 <script src="/js/simpleParallax.min.js"></script>
 <script src="/js/main.js"></script>
 <link rel="manifest" href="/manifest.json">
+
+{# SEO hreflang 标签 #}
+<link rel="alternate" hreflang="{{ config.default_language }}" href="{{ config.base_url }}/" />
+{% for code, language_conf in config.languages %}
+<link rel="alternate" hreflang="{{ code }}" href="{{ config.base_url }}/{{ code }}/" />
+{% endfor %}
+<link rel="alternate" hreflang="x-default" href="{{ config.base_url }}/" />
+
+{# 多语言检测 - 内联 JS 渲染全局字典 #}
+{% if config.extra.i18n_detect is defined %}
+<script>
+  window.__i18n_detect = {{ config.extra.i18n_detect | json_encode() | safe }};
+  window.__supported_languages = ["{{ config.default_language }}"{% for code, lang_conf in config.languages %}, "{{ code }}"{% endfor %}];
+</script>
+{% endif %}
+<script src="/js/i18n.js" defer></script>

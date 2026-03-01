@@ -40,6 +40,8 @@
   - [x] AVIF / WebP自适应
   - [x] 动态更新底部年份
   - [x] 访问量统计（Umami 或自定义）
+  - [x] 多语言支持（i18n）
+  - [x] 浏览器语言检测提示
 - [x] 内容板块
   - [x] 导航菜单
   - [x] 首屏板块
@@ -153,6 +155,10 @@
 3. 运行`zola serve`命令，本地预览主页，支持实时刷新
 
 要进行主页定制，你需要对 Zola 框架具有基本的了解，例如[理解项目结构](https://www.getzola.org/documentation/getting-started/directory-structure/)和[配置文件](https://www.getzola.org/documentation/getting-started/configuration/)，这些内容十分简单，只需要通读一遍即可。
+
+> **V2 新版说明**：内容配置现在支持两种方式：
+> 1. **`config.toml`**（传统方式）：将所有板块写在 `config.toml` 中，**仍然完全兼容**
+> 2. **`content/_index.md`**（推荐方式）：将板块和导航配置写在 `content/_index.md` 的 front-matter `[extra]` 中，支持多语言
 
 ### 基础配置
 
@@ -378,6 +384,46 @@ img = "/img/blog-event.avif"
 截图（仅展示比较美观的效果，可能和配置代码内容无关）
 
 ![产品列表截图](./docs/event.png)
+
+## 🌐 多语言
+
+本主题支持多语言，默认包含中文和英文。
+
+### 工作原理
+
+每种语言的内容（板块、导航、UI字符串）存放在对应的 `content/_index.[lang].md` 文件的 `[extra]` front-matter 中：
+
+```
+content/
+  _index.md        ← 中文（默认语言）
+  _index.en.md     ← 英文
+```
+
+`config.toml` 仅保存通用配置（logo、备案号等）和语言检测提示字典。
+
+### 添加新语言
+
+以添加日语为例：
+
+1. 在 `config.toml` 注册语言：
+   ```toml
+   [languages.ja]
+   title = "ホームページ"
+   ```
+
+2. 添加语言检测提示（`config.toml`）：
+   ```toml
+   [extra.i18n_detect.ja]
+   message = "このページは日本語でもご覧いただけます"
+   action = "切替"
+   url = "/ja/"
+   ```
+
+3. 创建 `content/_index.ja.md`，从 `_index.en.md` 复制结构并翻译内容
+
+### 向前兼容
+
+如果你仍然在 `config.toml` 中配置板块内容（旧方式），默认语言页面会优先使用 `config.toml` 中的内容，确保升级主题后无需任何改动。
 
 ## 💬 讨论
 

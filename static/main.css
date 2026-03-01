@@ -194,7 +194,7 @@ img {
     background: var(--heo-card-bg)
 }
 
-.nav.top a.nav-item {
+.nav.top .nav-item {
     color: var(--heo-fontcolor)
 }
 
@@ -285,7 +285,7 @@ span.site-name {
     color: var(--heo-fontcolor)
 }
 
-a.nav-item {
+.nav-item {
     color: var(--heo-white);
     opacity: .8;
     transition: ease-in-out .3s;
@@ -295,13 +295,13 @@ a.nav-item {
     border-radius: 16px
 }
 
-a.nav-item:hover {
+.nav-item:hover {
     opacity: 1;
     background: var(--heo-card-bg);
     color: var(--heo-fontcolor)
 }
 
-.nav.top a.nav-item:hover {
+.nav.top .nav-item:hover {
     background: var(--heo-secondbg)
 }
 
@@ -929,7 +929,7 @@ span.avatar-name {
         opacity: 1
     }
 
-    .menu-list a.nav-item {
+    .menu-list .nav-item {
         padding: 8px 8px;
         font-size: 16px;
         border-bottom: 1px solid #ffffff1e;
@@ -939,7 +939,7 @@ span.avatar-name {
         width: 80%
     }
 
-    .show-menu .menu-list a.nav-item {
+    .show-menu .menu-list .nav-item {
         padding: 12px 8px
     }
 
@@ -1169,5 +1169,184 @@ span.avatar-name {
 }
 
 .progressive-content.loaded {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Language Switcher Dropdown & Detection Banner
+   ========================================================================== */
+
+.lang-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.lang-switch-btn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    transition: ease-in-out 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.lang-switch-btn:hover {
+    background: var(--heo-card-bg);
+    color: var(--heo-fontcolor);
+}
+
+.nav.top .lang-switch-btn {
+    color: var(--heo-fontcolor);
+}
+
+.nav.top .lang-switch-btn:hover {
+    background: var(--heo-secondbg);
+}
+
+.lang-icon {
+    letter-spacing: -0.5px;
+}
+
+.lang-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--heo-card-bg);
+    border: var(--style-border);
+    border-radius: 12px;
+    box-shadow: var(--heo-shadow-blackdeep);
+    padding: 6px;
+    min-width: 120px;
+    z-index: 10;
+    animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lang-dropdown.open .lang-dropdown-menu {
+    display: block;
+}
+
+.lang-option {
+    display: block;
+    padding: 8px 14px;
+    font-size: 14px;
+    color: var(--heo-fontcolor);
+    border-radius: 8px;
+    transition: ease-in-out 0.2s;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.lang-option:hover {
+    background: var(--heo-secondbg);
+}
+
+.lang-option.active {
+    color: var(--heo-theme);
+    font-weight: 600;
+}
+
+/* Mobile language group */
+.lang-mobile-group {
+    display: flex;
+    gap: 8px;
+    padding: 12px 0;
+    border-top: var(--style-border);
+    margin-top: 8px;
+    width: 80%;
+}
+
+.lang-mobile-group .nav-item {
+    opacity: 0.6;
+}
+
+.lang-mobile-group .nav-item.active {
+    opacity: 1;
+    color: var(--heo-theme);
+}
+
+/* Language detection banner */
+.lang-detect-banner {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--heo-theme);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    gap: 12px;
+    animation: langBannerSlideIn 0.4s ease-out;
+}
+
+/* Push nav down when banner is visible */
+body.lang-banner-active .nav {
+    top: 40px;
+}
+
+body.lang-banner-active .nav-banner {
+    top: 100px;
+}
+
+body.lang-banner-active .first-stack {
+    margin-top: 220px;
+}
+
+@keyframes langBannerSlideIn {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.lang-detect-text {
+    font-size: 13px;
+    color: var(--heo-white);
+}
+
+.lang-detect-action {
+    font-size: 13px;
+    color: var(--heo-white);
+    background: rgba(255, 255, 255, 0.2);
+    padding: 3px 14px;
+    border-radius: 14px;
+    transition: ease-in-out 0.3s;
+    text-decoration: none;
+}
+
+.lang-detect-action:hover {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.lang-detect-dismiss {
+    font-size: 14px;
+    color: var(--heo-white);
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: ease-in-out 0.2s;
+    padding: 4px 8px;
+    line-height: 1;
+}
+
+.lang-detect-dismiss:hover {
     opacity: 1;
 }
