@@ -3,6 +3,7 @@
 {% import "partial/widget/event.html" as macro_event %}
 {% import "partial/widget/product-list.html" as macro_product_list %}
 {% import "partial/widget/product-single.html" as macro_product_single %}
+{% import "partial/widget/featured-posts.html" as macro_featured_posts %}
 
 {# 第三方分享信息 #}
 {% macro open_graph(title, _permalink, cover="", excerpt, type) %}
@@ -169,6 +170,10 @@
 
     {% if widget == "product-single" %}
         {{ macro_product_single::product_single(value=value) }}
+    {% endif %}
+
+    {% if widget == "featured-posts" %}
+        {{ macro_featured_posts::featured_posts(value=value) }}
     {% endif %}
 
 {% endmacro %}

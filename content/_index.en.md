@@ -48,6 +48,47 @@ url = "https://github.com/iWangJiaxiang"
 
 
 [[extra.index.widgets]]
+type = "featured-posts"
+[extra.index.widgets.value]
+title = "Featured Posts"
+bio = "Curated reads worth your time"
+style = "background: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%);"
+[[extra.index.widgets.value.columns]]
+title = "🔧 Tech"
+[[extra.index.widgets.value.columns.items]]
+title = "Pangolin: A Reverse Proxy Based on Zero Trust"
+url = "https://blog.jiaxiang.wang/articles/pangolin-a-reverse-proxy-for-zero-trust-network/"
+[[extra.index.widgets.value.columns.items]]
+title = "GitHub Action: Automatic Scheduled Releases for Static Sites"
+url = "https://blog.jiaxiang.wang/articles/github-action-makes-static-site-publish-on-schedule/"
+[[extra.index.widgets.value.columns.items]]
+title = "Embracing AVIF: Best Practices for Enhancing Website Speed (with Zola Template)"
+url = "https://blog.jiaxiang.wang/articles/use-avif-to-enhance-website-speed-and-zola-macro-template/"
+[[extra.index.widgets.value.columns]]
+title = "🎵 Music"
+[[extra.index.widgets.value.columns.items]]
+title = "Singing Supercomputing: 'A Supercomputer for the World'"
+url = "https://blog.jiaxiang.wang/articles/sc-song/"
+[[extra.index.widgets.value.columns.items]]
+title = "Continuing the Legacy: 'Computing for the Future'"
+url = "https://blog.jiaxiang.wang/articles/cs-song/"
+[[extra.index.widgets.value.columns.items]]
+title = "Demystifying Supercomputing! A Post-95s Engineer Decides to Sing It Out"
+url = "https://blog.jiaxiang.wang/articles/news-sc-song/"
+[[extra.index.widgets.value.columns]]
+title = "🌐 Open Source"
+[[extra.index.widgets.value.columns.items]]
+title = "Giving Back to the Community: This Blog Theme is Now Open Source!"
+url = "https://blog.jiaxiang.wang/articles/announcement-of-opensource-blog-theme-project/"
+[[extra.index.widgets.value.columns.items]]
+title = "Show Your Unique Side: Personal Homepage Theme is Now Open Source!"
+url = "https://blog.jiaxiang.wang/articles/announcement-of-opensource-personal-homepage-theme-project/"
+[[extra.index.widgets.value.columns.items]]
+title = "Are There Copyright Infringement Risks in Open Source Blog Themes? A Deep Compliance Analysis"
+url = "https://blog.jiaxiang.wang/articles/compliance-of-jiaxiang-wang-blog-theme/"
+
+
+[[extra.index.widgets]]
 type = "author"
 [extra.index.widgets.value]
 name = "Jiaxiang Wang"

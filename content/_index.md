@@ -57,6 +57,47 @@ bio = '''"专注于科技、音乐等领域跨界创新，分享经验与见解"
 
 
 [[extra.index.widgets]]
+type = "featured-posts"
+[extra.index.widgets.value]
+title = "推荐文章"
+bio = "精选好文，值得一读"
+style = "background: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%);"
+[[extra.index.widgets.value.columns]]
+title = "🔧 科技"
+[[extra.index.widgets.value.columns.items]]
+title = "Pangolin：基于零信任理念的反向代理"
+url = "https://blog.jiaxiang.wang/articles/pangolin-a-reverse-proxy-for-zero-trust-network/"
+[[extra.index.widgets.value.columns.items]]
+title = "GitHub Action：让静态网站实现定时发布"
+url = "https://blog.jiaxiang.wang/articles/github-action-makes-static-site-publish-on-schedule/"
+[[extra.index.widgets.value.columns.items]]
+title = "拥抱AVIF：提升网站加载速度的最佳实践，附Zola模板"
+url = "https://blog.jiaxiang.wang/articles/use-avif-to-enhance-website-speed-and-zola-macro-template/"
+[[extra.index.widgets.value.columns]]
+title = "🎵 音乐"
+[[extra.index.widgets.value.columns.items]]
+title = "前无古人唱超算，《超算为家国天下》"
+url = "https://blog.jiaxiang.wang/articles/sc-song/"
+[[extra.index.widgets.value.columns.items]]
+title = "后有新人继绝学，《计算为古今未来》"
+url = "https://blog.jiaxiang.wang/articles/cs-song/"
+[[extra.index.widgets.value.columns.items]]
+title = "给超算祛魅！95后理工男决定写歌唱出来"
+url = "https://blog.jiaxiang.wang/articles/news-sc-song/"
+[[extra.index.widgets.value.columns]]
+title = "🌐 开源"
+[[extra.index.widgets.value.columns.items]]
+title = "回馈社区，本站博客主题正式开源！"
+url = "https://blog.jiaxiang.wang/articles/announcement-of-opensource-blog-theme-project/"
+[[extra.index.widgets.value.columns.items]]
+title = "展示你独特的一面，个人主页主题正式开源！"
+url = "https://blog.jiaxiang.wang/articles/announcement-of-opensource-personal-homepage-theme-project/"
+[[extra.index.widgets.value.columns.items]]
+title = "开源博客主题存在版权侵权风险吗？本站开源博客主题的深度合规分析"
+url = "https://blog.jiaxiang.wang/articles/compliance-of-jiaxiang-wang-blog-theme/"
+
+
+[[extra.index.widgets]]
 type = "product-single"
 [extra.index.widgets.value]
 tip = "主页"

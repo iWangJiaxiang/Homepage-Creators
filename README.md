@@ -359,6 +359,43 @@ button = "访问"
 
 ![产品列表截图](./docs/product-list.png)
 
+#### 模块化组件板块：推荐文章
+
+支持多栏分组，用于推荐多个维度的精彩文章。文章**列表超过 3 条时还会自动向上循环滚动**。
+
+配置代码
+
+```toml
+[[extra.index.widgets]]
+# 重要，不要修改
+type = "featured-posts"
+[extra.index.widgets.value]
+# 左侧大标题与简介
+title = "推荐文章"
+bio = "精选好文，值得一读"
+# 背景样式设置，可为 CSS 背景属性（如渐变色）
+style = "background: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%);"
+# 每组文章占用单独一栏（桌面端最多一行3栏）
+[[extra.index.widgets.value.columns]]
+title = "🔧 科技"
+[[extra.index.widgets.value.columns.items]]
+title = "Pangolin：基于零信任理念的反向代理"
+url = "https://blog.jiaxiang.wang/articles/pangolin-a-reverse-proxy-for-zero-trust-network/"
+[[extra.index.widgets.value.columns.items]]
+title = "GitHub Action：让静态网站实现定时发布"
+url = "https://blog.jiaxiang.wang/articles/github-action-makes-static-site-publish-on-schedule/"
+# 第二栏
+[[extra.index.widgets.value.columns]]
+title = "🎵 音乐"
+[[extra.index.widgets.value.columns.items]]
+title = "前无古人唱超算，《超算为家国天下》"
+url = "https://blog.jiaxiang.wang/articles/sc-song/"
+```
+
+截图（仅展示比较美观的效果，可能和配置代码内容无关）
+
+![推荐文章截图](./docs/featured-posts.png)
+
 #### 模块化组件板块：重要事件
 
 展示重要活动、大事件等

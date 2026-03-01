@@ -354,6 +354,43 @@ Screenshot (for visual reference only, may differ from config above)
 
 ![Product list screenshot](./docs/product-list.png)
 
+#### Modular Component: Featured Posts
+
+Supports multi-column grouping to recommend great articles across different dimensions. The article list will **automatically scroll upwards continuously when there are more than 3 items**.
+
+Configuration code
+
+```toml
+[[extra.index.widgets]]
+# Important, do not modify
+type = "featured-posts"
+[extra.index.widgets.value]
+# Left side title and description
+title = "Featured Posts"
+bio = "Curated reads worth your time"
+# Background style setting, can be a CSS background property (e.g. gradient)
+style = "background: linear-gradient(180deg, #f5f7fa 0%, #c3cfe2 100%);"
+# Each group of articles occupies a separate column (up to 3 columns per row on desktop)
+[[extra.index.widgets.value.columns]]
+title = "🔧 Tech"
+[[extra.index.widgets.value.columns.items]]
+title = "Pangolin: A Reverse Proxy Based on Zero Trust"
+url = "https://blog.jiaxiang.wang/articles/pangolin-a-reverse-proxy-for-zero-trust-network/"
+[[extra.index.widgets.value.columns.items]]
+title = "GitHub Action: Automatic Scheduled Releases for Static Sites"
+url = "https://blog.jiaxiang.wang/articles/github-action-makes-static-site-publish-on-schedule/"
+# Second column
+[[extra.index.widgets.value.columns]]
+title = "🎵 Music"
+[[extra.index.widgets.value.columns.items]]
+title = "Singing Supercomputing: 'A Supercomputer for the World'"
+url = "https://blog.jiaxiang.wang/articles/sc-song/"
+```
+
+Screenshot (for visual reference only, may differ from config above)
+
+![Featured posts screenshot](./docs/featured-posts.png)
+
 #### Modular Component: Important Events
 
 Display important activities, major events, etc.
