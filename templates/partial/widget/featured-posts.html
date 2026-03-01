@@ -1,34 +1,44 @@
 {# title #}
 {# bio #}
-{# items: title, url #}
+{# style: optional background style #}
+{# columns: title, items(title, url) #}
 {% macro featured_posts(value) %}
 {# 读取 i18n 字符串 #}
 {% if section.extra.i18n is defined %}
     {% set i18n = section.extra.i18n %}
 {% endif %}
 
-{% set count = value.items | length %}
-<div class="product-group need-padding" id="{{ value.title }}">
-    <h2 class="group-title">{{ value.title | safe }}</h2>
-    {% if value.bio %}<span class="group-description">{{ value.bio | safe }}</span>{% endif %}
-    <div class="featured-posts-list"{% if count > 3 %} style="--item-count: {{ count }}"{% endif %}>
-      <div class="featured-posts-track{% if count > 3 %} scrolling{% endif %}">
-        {% for item in value.items %}
-        <a class="featured-post-item" href="{{ item.url | safe }}" target="_blank">
-          <span class="featured-post-index">{{ loop.index }}</span>
-          <span class="featured-post-title">{{ item.title | safe }}</span>
-        </a>
-        {% endfor %}
-        {# 若 > 3 条，克隆一份实现无缝循环 #}
-        {% if count > 3 %}
-          {% for item in value.items %}
-          <a class="featured-post-item" href="{{ item.url | safe }}" target="_blank">
-            <span class="featured-post-index">{{ loop.index }}</span>
-            <span class="featured-post-title">{{ item.title | safe }}</span>
-          </a>
-          {% endfor %}
-        {% endif %}
+<div class="featured-posts-widget" id="{{ value.title }}"{% if value.style %} style="{{ value.style | safe }}"{% endif %}>
+    <div class="featured-posts-header need-padding">
+      <h2 class="group-title">{{ value.title | safe }}</h2>
+      {% if value.bio %}<span class="group-description">{{ value.bio | safe }}</span>{% endif %}
+    </div>
+    <div class="featured-posts-columns need-padding">
+      {% for col in value.columns %}
+      {% set count = col.items | length %}
+      <div class="featured-posts-column">
+        <h3 class="featured-posts-column-title">{{ col.title | safe }}</h3>
+        <div class="featured-posts-list"{% if count > 3 %} style="--item-count: {{ count }}"{% endif %}>
+          <div class="featured-posts-track{% if count > 3 %} scrolling{% endif %}">
+            {% for item in col.items %}
+            <a class="featured-post-item" href="{{ item.url | safe }}" target="_blank">
+              <span class="featured-post-index">{{ loop.index }}</span>
+              <span class="featured-post-title">{{ item.title | safe }}</span>
+            </a>
+            {% endfor %}
+            {# 若 > 3 条，克隆一份实现无缝循环 #}
+            {% if count > 3 %}
+              {% for item in col.items %}
+              <a class="featured-post-item" href="{{ item.url | safe }}" target="_blank">
+                <span class="featured-post-index">{{ loop.index }}</span>
+                <span class="featured-post-title">{{ item.title | safe }}</span>
+              </a>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
       </div>
+      {% endfor %}
     </div>
 </div>
 {% endmacro %}
