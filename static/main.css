@@ -640,6 +640,78 @@ a.second-link:hover {
     margin: auto
 }
 
+/* ==========================================================================
+   Featured Posts Widget
+   ========================================================================== */
+
+.featured-posts-list {
+    margin-top: 24px;
+    overflow: hidden;
+    max-height: calc(3 * 56px);
+    border-radius: 12px;
+    border: var(--style-border);
+    box-shadow: var(--heo-shadow-border)
+}
+
+.featured-posts-track.scrolling {
+    animation: featured-scroll-up calc(var(--item-count, 3) * 3s) linear infinite
+}
+
+.featured-posts-list:hover .featured-posts-track.scrolling {
+    animation-play-state: paused
+}
+
+.featured-post-item {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    padding: 0 24px;
+    color: var(--heo-fontcolor);
+    transition: background ease-in-out .2s;
+    border-bottom: 1px solid var(--heo-card-border);
+    text-decoration: none
+}
+
+.featured-post-item:last-child {
+    border-bottom: none
+}
+
+.featured-post-item:hover {
+    background: var(--heo-secondbg)
+}
+
+.featured-post-index {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--heo-theme-op);
+    color: var(--heo-theme);
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-right: 16px
+}
+
+.featured-post-title {
+    font-size: 15px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+@keyframes featured-scroll-up {
+    0% {
+        transform: translateY(0)
+    }
+    100% {
+        transform: translateY(-50%)
+    }
+}
+
 .inline-word {
     word-break: keep-all;
     white-space: nowrap
@@ -813,6 +885,15 @@ span.avatar-name {
 
     .special-card {
         display: none
+    }
+
+    .featured-post-item {
+        height: 48px;
+        padding: 0 16px
+    }
+
+    .featured-posts-list {
+        max-height: calc(3 * 48px)
     }
 }
 
@@ -1087,16 +1168,40 @@ span.avatar-name {
         height: 150px
     }
 
-    h2.group-title {
-        margin: 0
+    a.linkbutton:hover {
+        filter: brightness(1.2)
     }
 
     a.linkbutton {
         margin-left: 8px
     }
 
+    .featured-post-item {
+        height: 44px;
+        padding: 0 12px
+    }
+
+    .featured-posts-list {
+        max-height: calc(3 * 44px)
+    }
+
+    .featured-post-title {
+        font-size: 14px
+    }
+
+    .featured-post-index {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+        margin-right: 12px
+    }
+
     .footer {
         margin-top: 20px
+    }
+
+    h2.group-title {
+        margin: 0
     }
 
     .title-group .title {
