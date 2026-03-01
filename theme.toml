@@ -76,11 +76,14 @@ avif_enable = true
 [extra.i18n_detect.zh]
 message = "此页面也有中文版本"
 action = "切换"
+lang_name = "中文"
 url = "/"
 [extra.i18n_detect.en]
 message = "This page is also available in English"
 action = "Switch"
+lang_name = "English"
 url = "/en/"
+
 
 # 主页小组件 按顺序渲染
 [[extra.index.widgets]]
