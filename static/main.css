@@ -290,6 +290,7 @@ span.site-name {
     opacity: .8;
     transition: ease-in-out .3s;
     font-size: 14px;
+    line-height: 1;
     margin: 0 2px;
     padding: 4px 8px;
     border-radius: 16px
