@@ -45,15 +45,49 @@ Widgets are modular components defined in `config.toml` under `[[extra.index.wid
 Widget rendering is handled by the `render_widget` macro in `_macros.html`, which dispatches to the appropriate partial based on the widget type.
 
 ### Configuration
-All customization happens in `config.toml`:
+Configuration is split between `config.toml` (global) and front-matter `[extra]` in content files (per-language):
+
+**`config.toml`** (language-agnostic):
 - `[extra.site]` - Site metadata (logo, email, ICP/security filing numbers)
-- `[extra.nav]` - Navigation menus (center, right) and popup message
 - `[extra.other]` - Feature flags (AVIF enable)
-- `[[extra.index.widgets]]` - Page content sections (order determines display order)
+- `[extra.i18n_detect]` - Language detection prompt dictionary (all languages)
+- `[[extra.index.widgets]]` - **Legacy**: page content (kept for backward compatibility)
+- `[extra.nav]` - **Legacy**: navigation menus (kept for backward compatibility)
+
+**`content/_index.md` / `content/_index.en.md`** (per-language):
+- `[extra.i18n]` - UI strings (learn_more, hot, new, etc.)
+- `[extra.nav]` - Navigation menus for this language
+- `[[extra.index.widgets]]` - Page content widgets for this language
+
+### Internationalization (i18n)
+
+The theme supports multiple languages via a **front-matter driven** architecture:
+
+```
+content/
+  _index.md        ← Default language (zh), widgets + nav + i18n strings in [extra]
+  _index.en.md     ← English version, same structure
+  _index.xx.md     ← Add more languages by creating new files
+```
+
+**How it works:**
+- Each `_index.[lang].md` contains all translatable content in its `[extra]` front-matter
+- Templates read from `section.extra` to get language-specific data
+- `config.toml` holds only language-agnostic settings
+
+**Backward compatibility:** If `config.extra.index.widgets` exists in `config.toml` (legacy mode), the default language page uses it instead of `section.extra`. This ensures users upgrading to the new theme version don't break their existing setup.
+
+**Adding a new language:**
+1. Register the language in `config.toml`: `[languages.xx]`
+2. Create `content/_index.xx.md` with translated `[extra]` content (copy structure from `_index.en.md`)
+3. Add a language detection entry in `config.toml`: `[extra.i18n_detect.xx]`
+
+**Language detection:** The theme includes `i18n.js` which detects the user's browser language and shows a suggestion banner if a matching translation is available. The detection dictionary is configured globally in `config.toml` under `[extra.i18n_detect]`.
 
 ### Static Assets
 - `static/main.css` - All styles
 - `static/js/main.js` - Main JavaScript (parallax effects, progressive image loading)
+- `static/js/i18n.js` - Language detection and switch suggestion
 - `static/js/simpleParallax.min.js` - Parallax library
 - `static/img/` - Image assets (logos, covers)
 - `static/iconfont/` - Icon font (icomoon)

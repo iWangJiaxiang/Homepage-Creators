@@ -17,7 +17,7 @@
 
 | Site Name | Site Address |
 |:------:|:-----------------------|
-| Jiaxiang Wang Personal Homepage| [https://www.jiaxiang.wang](https://www.jiaxiang.wang) |
+| Jiaxiang Wang Homepage | [https://www.jiaxiang.wang](https://www.jiaxiang.wang) |
 
 
 ## ℹ️ Introduction
@@ -26,7 +26,7 @@
 
 > Note: This theme is a port of the open-source [HeoWeb](https://github.com/zhheo/HeoWeb) static theme, thanks to [Zhang Hong Heo](https://blog.zhheo.com/) for the generous sharing.
 
-This theme is easy to use; you only need to modify the `config.toml` file to dynamically adjust the content. There is no need to modify HTML content like in the upstream repository, greatly reducing the cognitive burden on users.
+This theme is easy to use; you only need to modify the `config.toml` file to dynamically adjust content. No need to modify HTML content like the upstream repository, greatly reducing maintenance burden.
 
 ### 🔌 Features
 
@@ -35,10 +35,12 @@ This theme is easy to use; you only need to modify the `config.toml` file to dyn
 - [x] Basic
   - [x] Mobile responsiveness
   - [x] Animated scrolling
-  - [x] AVIF / WebP responsiveness
+  - [x] AVIF / WebP adaptive
   - [x] Dynamic footer year update
-  - [x] Analytics
-- [x] Content
+  - [x] Analytics (Umami or custom)
+  - [x] Multi-language support (i18n)
+  - [x] Browser language detection prompt
+- [x] Content Sections
   - [x] Navigation menu
   - [x] Hero section
   - [x] Author section
@@ -49,6 +51,7 @@ This theme is easy to use; you only need to modify the `config.toml` file to dyn
   - [x] Sticky notifications
 - [x] Compliance
   - [x] ICP filing (China)
+  - [x] Public security filing (China)
 
 ## 📝 Quick Start
 
@@ -74,9 +77,9 @@ This section helps you quickly run your own homepage website. If you plan to for
 1. Choose **Connect to Git**, then authorize Cloudflare to access your GitHub repository.
 1. Select your `Homepage-Creators` repository from the list.
 1. Configure build settings:
-  - **Framework preset**: Select `None`
-  - **Build command**: Enter `zola build`
-  - **Build output directory**: Enter `public`
+  - **Framework preset**: Select `None`.
+  - **Build command**: Enter `zola build`.
+  - **Build output directory**: Enter `public`.
   - Add environment variable `UNSTABLE_PRE_BUILD` with value `asdf plugin add zola https://github.com/salasrod/asdf-zola && asdf install zola $ZOLA_VERSION && asdf global zola $ZOLA_VERSION`
   - Add environment variable `ZOLA_VERSION` with value `0.20.0`
   - If you encounter any issues, please refer to the [official documentation](https://www.getzola.org/documentation/deployment/cloudflare-pages/)
@@ -86,8 +89,8 @@ This section helps you quickly run your own homepage website. If you plan to for
 
 ### Local Deployment
 
-1. Refer to the [official documentation](https://www.getzola.org/documentation/getting-started/installation/) to install the Zola command line tool
-1. Clone this repository to your local machine
+1. Refer to the [official documentation](https://www.getzola.org/documentation/getting-started/installation/) to install the Zola CLI tool
+1. Clone this repository locally
 
     ```bash
     git clone --depth=1 https://github.com/iWangJiaxiang/Homepage-Creators
@@ -99,65 +102,69 @@ This section helps you quickly run your own homepage website. If you plan to for
     cd Homepage-Creators
     ```
 
-1. Run the preview command, then open the suggested preview address in your browser
+1. Run the preview command, then open the suggested URL in your browser
 
     ```bash
     zola serve
     ```
 
-    You should now be able to successfully access the blog website
+    You should now be able to access the homepage website
 
-1. Refer to the official materials to further customize your homepage
-   - [Zola command documentation](https://www.getzola.org/documentation/getting-started/cli-usage/)
+1. Refer to official docs to further customize your homepage
+   - [Zola CLI documentation](https://www.getzola.org/documentation/getting-started/cli-usage/)
    - [Understanding project structure](https://www.getzola.org/documentation/getting-started/directory-structure/)
    - [Customization](https://www.getzola.org/documentation/getting-started/configuration/)
 
-1. Modify the `config.toml` configuration file as needed; you should have a basic understanding of TOML format.
+1. Refer to the [Customize Your Homepage](#customize-your-homepage) section to modify `config.toml` as needed; you should have a basic understanding of TOML format.
 
 1. Place your image assets in the `static/img` folder as needed
 
 ## Formal Usage
 
-This section's solution differs from directly modifying the repository code mainly in content isolation. Based on the Zola blog framework mechanism, installing this repository's code as a theme allows complete isolation between theme updates and user modifications, enabling long-term use and avoiding technical debt.
+The key difference from directly modifying this repository is content isolation. By installing this repository as a Zola theme, theme updates and your customizations are completely isolated, enabling long-term use without technical debt.
 
-For formal usage, it's assumed you have basic knowledge of the [Zola](https://github.com/getzola/zola) framework and Git Submodules. The specific steps are as follows:
+For formal usage, it's assumed you have basic knowledge of [Zola](https://github.com/getzola/zola) and Git Submodules. Steps:
 
-1. Install the Zola command-line tool locally, refer to the [official documentation](https://www.getzola.org/documentation/getting-started/installation/)
-1. Use the `zola` command to initialize a new website locally (your personal homepage) and initialize it as a Git repository. The command format is `zola init <site name>`
-1. Install this theme repository as a Git Submodule in your website
+1. Install the Zola CLI tool locally, refer to the [official docs](https://www.getzola.org/documentation/getting-started/installation/)
+1. Initialize a new Zola website: `zola init <site name>`
+1. Install this theme as a Git Submodule
    ```bash
    git submodule add -b main https://github.com/iWangJiaxiang/Homepage-Creators themes
    ```
-   At this point, your repository should automatically create a `themes/Homepage-Creators` folder
+   This creates a `themes/Homepage-Creators` folder
 1. Download the repository contents
    ```bash
    git submodule update --init
    ```
-   Now, the `themes/Homepage-Creators` folder should have content
-1. Configure the new website to use this theme by modifying the `config.toml` file's property to `theme = "Homepage-Creators"`
-1. Refer to the [Customize Your Homepage](#customize-your-homepage) section to modify the `config.toml` configuration file as needed; you should have a basic understanding of TOML format.
+   Now `themes/Homepage-Creators` should have content
+2. Configure `config.toml`: set `theme = "Homepage-Creators"`
+3. Refer to [Customize Your Homepage](#customize-your-homepage) to modify `config.toml` as needed
 
-Afterwards, your personal homepage website can be maintained as a separate Git repository.
+Your personal homepage website can then be maintained as a separate Git repository.
 
-To update the theme, you only need to update the Git Submodule's branch/tag/code.
+To update the theme, simply update the Git Submodule's branch/tag/code.
 
 ## Customize Your Homepage
 
-Customization is very simple! No code changes are needed, as I've modularized the sections. You only need to:
+Customization is very simple! No code changes needed — sections are fully modular. You only need to:
 
-1. Place your image assets in the `static/img` folder (the most time-consuming and challenging work is actually image creation...)
-2. Modify the `config.toml` file to configure sections, text content, and referenced images
-3. Run the `zola serve` command to preview the homepage locally, with real-time refresh support
+1. Place your image assets in the `static/img` folder (the hardest part is actually creating the images...)
+2. Modify `config.toml` to configure sections, text content, and referenced images
+3. Run `zola serve` for local preview with live reload
 
-To customize your homepage, you need a basic understanding of the Zola framework, such as [understanding project structure](https://www.getzola.org/documentation/getting-started/directory-structure/) and [configuration files](https://www.getzola.org/documentation/getting-started/configuration/). These are very simple concepts that only require a single read-through.
+You need a basic understanding of Zola, such as [project structure](https://www.getzola.org/documentation/getting-started/directory-structure/) and [configuration](https://www.getzola.org/documentation/getting-started/configuration/) — these are straightforward and only require a single read-through.
+
+> **V2 Update**: Content configuration now supports two methods:
+> 1. **`config.toml`** (legacy): Place all sections in `config.toml` — **still fully compatible**
+> 2. **`content/_index.md`** (recommended): Place sections and nav config in `content/_index.md` front-matter `[extra]`, with multi-language support
 
 ### Basic Configuration
 
-You can configure website information in the `config.toml` file as follows:
+Configure website information in `config.toml`:
 
 ```toml
 [extra.site]
-# Website establishment year, used for generating copyright content
+# Website establishment year, for copyright generation
 start_year = 2024
 # Website Logo
 logo = "/img/logo.webp"
@@ -173,13 +180,13 @@ compliance_security = "公网安备0000000000号"
 compliance_security_link = "https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=0000000000"
 
 [extra.other]
-# Enable AVIF image format conversion to significantly reduce image size
+# Enable AVIF image format conversion
 avif_enable = true
 ```
 
 ### Navigation Menu
 
-You can configure the content of the **top navigation bar** and **notifications** in the `config.toml` file as follows:
+Configure the **top navigation bar** and **notifications** in `config.toml`:
 
 ```toml
 [extra.nav]
@@ -191,19 +198,19 @@ enable = true
 text = "🎉 Visit Author's Blog"
 url = "https://blog.jiaxiang.wang"
 
-# Center navigation bar configuration
+# Center navigation bar
 [extra.nav.center]
 menus = [
-    # Set internal = true, url as text indicates internal navigation, page scrolls to specific section
+    # internal = true: page scrolls to the section with matching id
     { name = "Home", url = "Home", internal = true},
     { name = "Theme", url = "Theme", internal = true},
     { name = "Blog", url = "Blog", internal = true},
     { name = "Media", url = "Media", internal = true},
-    # Set internal = false, url as link indicates external navigation
+    # internal = false: external link
     { name = "Projects", url = "https://blog.jiaxiang.wang/tags/project/", internal = false},
 ]
 
-# Right navigation bar configuration
+# Right navigation bar
 [extra.nav.right]
 menus = [
     { name = "Author's Blog", url = "https://blog.jiaxiang.wang", internal = false},
@@ -213,19 +220,19 @@ menus = [
 
 ### Content Sections
 
-You can flexibly customize sections according to your needs. Except for the top navigation bar, any section of the page is a **modular component** that can have **unlimited customization of order and quantity**.
+You can flexibly customize sections. Except for the top nav, every section is a **modular component** with **unlimited order and quantity customization**.
 
-Using sections is very simple, just paste the **section configuration code at the end of `config.toml`**, after the `[extra.other]` Section. The first line of configuration code is uniformly `[[extra.index.widgets]]`, where `[[ ]]` represents an array in TOML syntax.
+Simply paste the **section config code at the end of `config.toml`**, after the `[extra.other]` section. The first line is always `[[extra.index.widgets]]` (`[[ ]]` represents an array in TOML syntax).
 
-**The order of sections matches the order of addition**, meaning you can adjust the code order in the `config.toml` file to control the page display order.
+**Sections are displayed in the order they are defined** — rearrange the code to control display order.
 
-If you have any doubts, the quickest way is to reference this project's [config.toml file](https://github.com/iWangJiaxiang/Homepage-Creators/blob/main/config.toml).
+If in doubt, refer to this project's [config.toml file](https://github.com/iWangJiaxiang/Homepage-Creators/blob/main/config.toml).
 
-Currently supported modular components are as follows:
+Currently supported modular components:
 
-#### Modular Component Section: Header Content
+#### Modular Component: Header Content
 
-Configuration code:
+Configuration code
 
 ```toml
 [[extra.index.widgets]]
@@ -234,13 +241,13 @@ type = "header"
 [extra.index.widgets.value]
 title_1 = "Main Title 1"
 title_2 = "Main Title 2"
-bio_1 = "This description has <span class=\"inline-word\">highlighted text</span>"
+bio_1 = "Description with <span class=\"inline-word\">highlighted text</span>"
 bio_2 = "Another description line"
 # "Learn More" button link
 about_url = "https://blog.jiaxiang.wang/about/"
 # Right side image
 cover = "/img/logo.svg"
-# Small buttons next to "Learn More", can add/remove as needed, usually for social media links
+# Small buttons next to "Learn More", usually for social media links
 [[extra.index.widgets.value.links]]
 class_icon = " icon-github-line"
 url = "https://github.com/iWangJiaxiang"
@@ -249,9 +256,13 @@ class_icon = " icon-github-line"
 url = "https://github.com/iWangJiaxiang"
 ```
 
-#### Modular Component Section: Author Introduction
+Screenshot (for visual reference only, may differ from config above)
 
-Configuration code:
+![Header screenshot](./docs/header.png)
+
+#### Modular Component: Author Introduction
+
+Configuration code
 
 ```toml
 [[extra.index.widgets]]
@@ -260,18 +271,22 @@ type = "author"
 [extra.index.widgets.value]
 # Name
 name = "Site Owner"
-# Avatar, place images in /static/img folder, format here starts with: /img/
+# Avatar, place in /static/img folder, path starts with: /img/
 avatar = "/img/logo01.webp"
 title = "Team leader, architect,"
-# Personal introduction or thoughts
+# Personal introduction
 bio = "A brief introduction about the site owner~"
 ```
 
-#### Modular Component Section: Single Product
+Screenshot (for visual reference only, may differ from config above)
 
-Can be used to showcase personal projects, works, achievements, etc.
+![Author screenshot](./docs/author.png)
 
-Configuration code:
+#### Modular Component: Single Product
+
+Showcase personal projects, works, achievements, etc.
+
+Configuration code
 
 ```toml
 [[extra.index.widgets]]
@@ -281,29 +296,32 @@ type = "product-single"
 # Modify text content as needed
 tip = "Homepage"
 title = "Personal Homepage<br>Now Open Source"
-bio_1 = "Present stunning <span class=\"inline-word\">effects</span> like this page"
-bio_2 = "Easy configuration, quickly build your <span class=\"inline-word\">personal homepage</span>"
-# Product image, place in /static/img folder, format here starts with: /img/
+bio_1 = "Stunning <span class=\"inline-word\">effects</span> like this page"
+bio_2 = "Easy to configure, quickly build your <span class=\"inline-word\">homepage</span>"
+# Product image, place in /static/img folder
 img = "/img/homepage-single.avif"
 # Product button list
 [[extra.index.widgets.value.links]]
-# Style, supports primary-button and second-link
+# Style: primary-button or second-link
 class = "primary-button"
-# Link
 url = "https://github.com/iWangJiaxiang/Homepage-Creators"
-# Display name
-name = "Get Source Code Now"
+name = "Get Source Code"
 [[extra.index.widgets.value.links]]
 class = "second-link"
 url = "https://github.com/iWangJiaxiang"
 name = "Developer's Page"
 ```
 
-#### Modular Component Section: Product List
+Screenshot (for visual reference only, may differ from config above)
 
-Used to display a series of content
 
-Configuration code:
+![Single product screenshot](./docs/product-single.png)
+
+#### Modular Component: Product List
+
+Display a series of content
+
+Configuration code
 
 ```toml
 [[extra.index.widgets]]
@@ -314,12 +332,11 @@ type = "product-list"
 title = "Media"
 bio = "Contributing to the spirit of internet sharing"
 [[extra.index.widgets.value.items]]
-# Product logo, place in /static/img folder, format here starts with: /img/
+# Product logo, place in /static/img folder
 logo = "/img/internet.svg"
-# Modify text content as needed
 title = "Personal Blog"
 bio = "Introduction text for personal blog"
-# Button configuration
+# Button config
 url = "https://blog.jiaxiang.wang/"
 button = "Visit"
 # Show hot tag
@@ -330,13 +347,18 @@ title = "WeChat Official Account"
 bio = "Get updates first"
 url = "https://blog.jiaxiang.wang/wechat"
 button = "Visit"
+
 ```
 
-#### Modular Component Section: Important Events
+Screenshot (for visual reference only, may differ from config above)
+
+![Product list screenshot](./docs/product-list.png)
+
+#### Modular Component: Important Events
 
 Display important activities, major events, etc.
 
-Configuration code:
+Configuration code
 
 ```toml
 [[extra.index.widgets]]
@@ -345,14 +367,58 @@ type = "event"
 [extra.index.widgets.value]
 # Modify text content as needed
 tip = "Major Event"
-title = "Jiaxiang Wang Blog Theme<br>Now Open Source!"
-bio = "A theme built for creators, start your blogging journey with zero cost and zero maintenance, progress together with excellent bloggers!"
-button = "Get Source Code Now"
+title = "Blog Theme<br>Now Open Source!"
+bio = "A theme built for creators — start your blog journey at zero cost, zero maintenance!"
+button = "Get Source Code"
 note = "Built with Zola"
 url = "https://github.com/iWangJiaxiang/zola-theme-jiaxiang.wang"
-# Background image, place in /static/img folder, format here starts with: /img/
+# Background image, place in /static/img folder
 img = "/img/blog-event.avif"
 ```
+
+Screenshot (for visual reference only, may differ from config above)
+
+![Event screenshot](./docs/event.png)
+
+## 🌐 Multi-language
+
+This theme supports multiple languages, with Chinese and English included by default.
+
+### How It Works
+
+Each language's content (sections, navigation, UI strings) is stored in the `[extra]` front-matter of the corresponding `content/_index.[lang].md` file:
+
+```
+content/
+  _index.md        ← Chinese (default language)
+  _index.en.md     ← English
+```
+
+`config.toml` only stores global settings (logo, filing numbers, etc.) and the language detection prompt dictionary.
+
+### Adding a New Language
+
+Example: adding Japanese
+
+1. Register the language in `config.toml`:
+   ```toml
+   [languages.ja]
+   title = "ホームページ"
+   ```
+
+2. Add a language detection prompt (`config.toml`):
+   ```toml
+   [extra.i18n_detect.ja]
+   message = "このページは日本語でもご覧いただけます"
+   action = "切替"
+   url = "/ja/"
+   ```
+
+3. Create `content/_index.ja.md`, copy the structure from `_index.en.md` and translate the content
+
+### Backward Compatibility
+
+If you still configure sections in `config.toml` (legacy method), the default language page will prioritize `config.toml` content, ensuring no changes are needed after upgrading the theme.
 
 ## 💬 Discussion
 
@@ -361,3 +427,9 @@ If you have any suggestions or comments about the theme, feel free to submit PRs
 ## 🔐 License
 
 [Homepage Creators](https://github.com/iWangJiaxiang/Homepage-Creators) is open-source under the [AGPL](./LICENSE) license, please comply with the open-source agreement.
+
+## 📝 Acknowledgments
+
+CDN acceleration and security protection for this project are sponsored by [Tencent EdgeOne](https://edgeone.ai/?from=github).
+
+[![Edge One](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png)](https://edgeone.ai/?from=github)

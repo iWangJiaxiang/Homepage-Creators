@@ -136,5 +136,18 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault()
   })
 
+  // 语言切换下拉菜单
+  var langBtn = document.getElementById('lang-switch-btn');
+  var langDropdown = document.getElementById('lang-dropdown');
+  if (langBtn && langDropdown) {
+    langBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      langDropdown.classList.toggle('open');
+    });
+    document.addEventListener('click', function () {
+      langDropdown.classList.remove('open');
+    });
+  }
+
   initNav()
 });

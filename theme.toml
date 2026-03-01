@@ -72,6 +72,16 @@ menus = [
 # AVIF 图片优化，大幅降低图片尺寸
 avif_enable = true
 
+# 多语言检测提示（全局字典，渲染为内联 JS）
+[extra.i18n_detect.zh]
+message = "此页面也有中文版本"
+action = "切换"
+url = "/"
+[extra.i18n_detect.en]
+message = "This page is also available in English"
+action = "Switch"
+url = "/en/"
+
 # 主页小组件 按顺序渲染
 [[extra.index.widgets]]
 type = "header"

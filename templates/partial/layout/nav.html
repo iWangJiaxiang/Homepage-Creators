@@ -1,3 +1,26 @@
+{# 读取 nav 配置：向前兼容 config.extra.nav，否则用 section.extra.nav #}
+{% if lang == config.default_language and config.extra.nav is defined %}
+    {% set nav = config.extra.nav %}
+{% elif section.extra.nav is defined %}
+    {% set nav = section.extra.nav %}
+{% else %}
+    {% set nav = false %}
+{% endif %}
+
+{# 读取 i18n 字符串 #}
+{% if section.extra.i18n is defined %}
+    {% set i18n = section.extra.i18n %}
+{% else %}
+    {% set i18n = false %}
+{% endif %}
+
+{# 语言检测通知 banner（由 JS 控制显示/隐藏） #}
+<div class="lang-detect-banner" id="lang-detect-banner" style="display: none;">
+    <span class="lang-detect-text" id="lang-detect-text"></span>
+    <a class="lang-detect-action" id="lang-detect-action" href="#"></a>
+    <button class="lang-detect-dismiss" id="lang-detect-dismiss" aria-label="Dismiss">✕</button>
+</div>
+
 {# 电脑端 #}
 <div class="nav top">
     <div class="nav-content">
@@ -8,7 +31,8 @@
             </a>
         </div>
         <div class="nav-center">
-            {% for menu in config.extra.nav.center.menus %}
+            {% if nav and nav.center is defined %}
+            {% for menu in nav.center.menus %}
             <a class="nav-item"
                 {% if menu.internal %}
                 href="javascript:homepage.scrollTo('{{ menu.url}}');" 
@@ -17,9 +41,11 @@
                 {% endif %}
                 >{{ menu.name }}</a>
             {% endfor %}
+            {% endif %}
         </div>
         <div class="nav-right">
-            {% for menu in config.extra.nav.right.menus %}
+            {% if nav and nav.right is defined %}
+            {% for menu in nav.right.menus %}
             <a class="nav-item"
                 {% if menu.internal %}
                 href="javascript:homepage.scrollTo('{{ menu.url}}}');" 
@@ -28,13 +54,30 @@
                 {% endif %}
                 >{{ menu.name }}</a>
             {% endfor %}
+            {% endif %}
+            {# 语言切换下拉菜单 - 从 i18n_detect 字典渲染 #}
+            {% if config.extra.i18n_detect is defined %}
+            <div class="lang-dropdown nav-item" id="lang-dropdown">
+                <button class="lang-switch-btn" id="lang-switch-btn" aria-label="Switch language">
+                    <span class="lang-icon">文/A</span>
+                </button>
+                <div class="lang-dropdown-menu" id="lang-dropdown-menu">
+                    {% for code, detect in config.extra.i18n_detect %}
+                    <a class="lang-option{% if lang == code %} active{% endif %}" href="{{ detect.url }}">
+                        {{ detect.lang_name | default(value=code) }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
             <a class="nav-menu" id="nav-menu"><span class=" icon-menu-fill"></span></a>
         </div>
     </div>
 </div>
 {# 手机端 #}
 <div class="menu-list" id="menu-list">
-    {% for menu in config.extra.nav.right.menus %}
+    {% if nav and nav.right is defined %}
+    {% for menu in nav.right.menus %}
     <a class="nav-item"
         {% if menu.internal %}
         href="javascript:homepage.scrollTo('{{ menu.url}}}');" 
@@ -43,7 +86,9 @@
         {% endif %}
         >{{ menu.name }}</a>
     {% endfor %}
-    {% for menu in config.extra.nav.center.menus %}
+    {% endif %}
+    {% if nav and nav.center is defined %}
+    {% for menu in nav.center.menus %}
     <a class="nav-item"
         {% if menu.internal %}
         href="javascript:homepage.scrollTo('{{ menu.url}}}');" 
@@ -52,10 +97,21 @@
         {% endif %}
         >{{ menu.name }}</a>
     {% endfor %}
+    {% endif %}
+    {# 手机端语言切换 #}
+    {% if config.extra.i18n_detect is defined %}
+    <div class="lang-mobile-group">
+        {% for code, detect in config.extra.i18n_detect %}
+        <a class="nav-item{% if lang == code %} active{% endif %}" href="{{ detect.url }}">
+            {{ detect.lang_name | default(value=code) }}
+        </a>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
-{% if config.extra.nav.message.enable %}
+{% if nav and nav.message is defined and nav.message.enable %}
 <div class="nav-banner">
-    <a class="nav-banner-text" href="{{ config.extra.nav.message.url }}" target="_blank">{{ config.extra.nav.message.text | safe }}<span
+    <a class="nav-banner-text" href="{{ nav.message.url }}" target="_blank">{{ nav.message.text | safe }}<span
         class=" icon-arrow-right-s-line" style="font-size: 16px;"></span></a>
 </div>
 {% endif %}

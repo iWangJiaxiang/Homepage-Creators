@@ -7,7 +7,17 @@
 
 {% block content %}
 
-    {% for widget in config.extra.index.widgets %}
+    {# 向前兼容：如果 config.extra 中定义了 widgets（旧模式），默认语言使用 config.extra #}
+    {# 否则使用 section.extra（front-matter 新模式） #}
+    {% if lang == config.default_language and config.extra.index.widgets is defined %}
+        {% set widgets = config.extra.index.widgets %}
+    {% elif section.extra.index is defined and section.extra.index.widgets is defined %}
+        {% set widgets = section.extra.index.widgets %}
+    {% else %}
+        {% set widgets = [] %}
+    {% endif %}
+
+    {% for widget in widgets %}
     {{ macro::render_widget(widget=widget.type, value=widget.value) }}
     {% endfor %}
 

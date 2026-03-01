@@ -6,6 +6,11 @@
 {# cover: #}
 {# links: class_icon, url#}
 {% macro header(value) %}
+{# 读取 i18n 字符串 #}
+{% if section.extra.i18n is defined %}
+    {% set i18n = section.extra.i18n %}
+{% endif %}
+
 <div class="first-stack need-padding">
     <div class="left-Introduce">
       <div class="title-group">
@@ -16,7 +21,7 @@
         <span class="discription-text">{{ value.bio_1 | safe }}<br>{{ value.bio_2 | safe }}</span>
       </div>
       <div class="first-stack-links">
-        <a href="{{ value.about_url | safe }}" class="about-button" target="_blank">了解更多</a>
+        <a href="{{ value.about_url | safe }}" class="about-button" target="_blank">{% if i18n is defined %}{{ i18n.learn_more }}{% else %}More{% endif %}</a>
         {% for link in value.links %}
         <a href="{{ link.url | safe }}" class="about-button social-button" target="_blank">
           <i class="{{ link.class_icon }}"></i>
