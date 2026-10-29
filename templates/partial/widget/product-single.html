@@ -6,7 +6,7 @@
 {# style #}
 {# style_tip #}
 {# link: class, url, name #}
-{% macro product_single(value) %}
+{% component site.product_single(config, i18n, value) %}
 <div class="product-banner" id="{{ value.tip | safe }}"{% if value.style %} style="{{ value.style | safe}}"{% endif %}>
     <div class="banner-info need-padding">
       <span class="tips"{% if value.style_tip %} style="{{ value.style_tip | safe}}"{% endif %}>{{ value.tip | safe }}</span>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="banner-pic">
-      {{ macro::img_progressive_loading_single_size(src=value.img, class="banner-pic-img") }}
+      {{<site.img_progressive_loading_single_size config i18n src={value.img} class={"banner-pic-img"} />}}
     </div>
 </div>
-{% endmacro %}
+{% endcomponent %}

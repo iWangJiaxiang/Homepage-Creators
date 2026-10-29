@@ -4,7 +4,7 @@
 {# bio #}
 {# note #}
 {# url #}
-{% macro event(value) %}
+{% component site.event(config, i18n, value) %}
   <div class="special-card" id="{{ value.tip | safe }}">
     <div class="special-card-left">
       <div class="tips">{{ value.tip | safe}}</div>
@@ -15,6 +15,6 @@
         <span class="linkbotton-tips">{{ value.note | safe }}</span>
       </div>
     </div>
-    {{ macro::img_progressive_loading_single_size(src=value.img, class="special-card-right") }}
+    {{<site.img_progressive_loading_single_size config i18n src={value.img} class={"special-card-right"} />}}
   </div>
-{% endmacro %}
+{% endcomponent %}

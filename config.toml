@@ -21,10 +21,8 @@ minify_html = true
 title = "Homepage"
 description = "Curiosity, exploration, creation. Personal homepage."
 
-[markdown]
-# Whether to do syntax highlighting
-# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = false
+# Syntax highlighting is disabled by default. To enable it in Zola 0.23.6,
+# configure [markdown.highlighting] with a theme (for example, "github-dark").
 
 [extra]
 

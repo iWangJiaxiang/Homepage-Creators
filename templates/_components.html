@@ -1,0 +1,188 @@
+
+{# 第三方分享信息 #}
+{% component site.open_graph(config, i18n, title, _permalink, excerpt, type, cover="") %}
+    {# truncate 的 length 为限制长度 -1 ，因为最后自动添加省略号 #}
+    {% set description = excerpt or config.description or title %}
+    {% if cover == "" %}
+        {% set cover = config.extra.site.logo %}
+    {% endif %}
+    {% set image %}{{<site.thumbnail_m config i18n url={cover} />}}{% endset %}
+
+    <!-- Open Graph Start -->
+    <meta property="og:site_name" content="{{ config.title }}" />
+    <meta property="og:type" content="{{ type }}" />
+    <meta property="og:title" content="{{ title | truncate(length=34) }}" />
+    <meta property="og:url" content="{{ config.base_url }}{{ _permalink }}" />
+    
+    <meta property="og:description" content="{{ description | truncate(length=64) }}" />
+    <meta property="og:image" content="{{ image | trim }}" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ title | truncate(length=34) }}" />
+    <meta name="twitter:url" content="{{ config.base_url }}{{ _permalink }}" />
+    <meta name="twitter:description" content="{{ description | truncate(length=64) }}" />
+    <meta name="twitter:image" content="{{ image | trim }}" />
+    <!-- Open Graph End -->
+    <meta name="description" content="{{ description | truncate(length=154) }}" />
+    <meta name="apple-mobile-web-app-title" content="{{ title | truncate(length=34) }}">
+{% endcomponent %}
+
+{# 包含 "| title" 后缀 #}
+{% component site.head_meta(config, i18n, title, _permalink, excerpt, type, cover="") %}
+    {% set title = title | default(value=config.title) %}
+    {% set browser_title = title ~ " | " ~ config.title %}
+
+    <!-- Open Graph Start -->
+    <title>{{ browser_title | truncate(length=64) }}</title>
+    {{<site.open_graph config i18n title={title} _permalink={_permalink} cover={cover} excerpt={excerpt} type={type} />}}
+{% endcomponent %}
+
+{# 不包含 "| title" 后缀 #}
+{% component site.head_meta_original_title(config, i18n, _permalink, excerpt, type, title="", cover="") %}
+    {% if title == "" %}
+        {% set title = config.title %}
+    {% endif %}
+    <title>{{ title | truncate(length=64) }}</title>
+    {{<site.open_graph config i18n title={title} _permalink={_permalink} cover={cover} excerpt={excerpt} type={type} />}}
+{% endcomponent %}
+
+
+{# 生成缩略图，跳过avif格式和svg格式 {{<site.thumbnail config i18n url={post.cover} />}} #}
+{% component site.thumbnail(config, i18n, url, width=800, height=500, op="fit", quality=75, format="webp") %}
+{%- set url = url or config.extra.site.default_cover or config.extra.site.logo -%}
+{%- if url is ending_with(pat=".avif") or url is ending_with(pat=".svg") -%}
+    {{ url | trim | safe }}
+{%- else -%}
+    {%- if url -%}
+        {%- if format == "avif" -%}
+            {%- if not config.extra.other?.avif_enable -%}
+                {%- set format = "webp" -%}
+            {%- else -%}
+                {%- set quality = 75 -%}
+            {%- endif -%}
+        {%- endif -%}
+        {%- set thumbnail = resize_image(path=url | trim, width=width, height=height, op=op, format=format, quality=quality) -%}
+        {%- set result = thumbnail.url -%}
+    {%- else -%}
+        {%- set result = config.extra.site.default_cover -%}
+    {%- endif -%}
+    {{ result | trim | safe }}
+{%- endif -%}
+{% endcomponent %}
+
+{# 生成缩略图 小 {{<site.thumbnail_s config i18n url={post.cover} />}} #}
+{% component site.thumbnail_s(config, i18n, url, width=200, height=120, op="fit", format="webp") %}
+{{<site.thumbnail config i18n url={url | safe} width={width} height={height} op={op} format={format} />}}
+{% endcomponent %}
+
+{# 生成缩略图 中等 {{<site.thumbnail_m config i18n url={post.cover} />}} #}
+{% component site.thumbnail_m(config, i18n, url, width=500, height=300, op="fit", format="webp") %}
+{{<site.thumbnail config i18n url={url | safe} width={width} height={height} op={op} format={format} />}}
+{% endcomponent %}
+
+{# 生成缩略图 大 {{<site.thumbnail_l config i18n url={post.cover} />}} #}
+{% component site.thumbnail_l(config, i18n, url, width=800, height=500, op="fit", format="webp") %}
+{{<site.thumbnail config i18n url={url | safe} width={width} height={height} op={op} format={format} />}}
+{% endcomponent %}
+
+{# 生成缩略图 大 {{<site.thumbnail_l config i18n url={post.cover} />}} #}
+{% component site.thumbnail_xl(config, i18n, url, width=1200, height=800, op="fit", format="webp") %}
+{{<site.thumbnail config i18n url={url | safe} width={width} height={height} op={op} format={format} />}}
+{% endcomponent %}
+
+{# 渐进式加载图片 src 本地路径 #}
+{% component site.img_progressive_loading(config, i18n, src, alt="", id="", class="", style="") %}
+{% set source_url = src or config.extra.site.default_cover or config.extra.site.logo %}
+{% set source_type = "image/webp" %}
+{% if source_url is ending_with(pat=".svg") %}
+    {% set source_type = "image/svg+xml" %}
+{% elif source_url is ending_with(pat=".avif") or config.extra.other?.avif_enable %}
+    {% set source_type = "image/avif" %}
+{% endif %}
+<picture {% if id != "" %}id="{{ id }}" {% endif %} class="{% if class != "" %}{{ class }} {% endif %}progressive-picture"{% if style != "" %} style="{{ style }}"{% endif %}>
+    {#- the small image that will be blurred -#}
+    <img class="progressive-thumbnail" src="{{<site.thumbnail config i18n url={src} width={16} op={"fit_width"} quality={1} />}}" loading="lazy" decoding="async">
+    {#- a lazy responsive image with data-srcset -#}
+    {#- 75em = 1200px -#}
+    <source type="{{ source_type }}" media="(min-width: 75em)" srcset="{{<site.thumbnail config i18n url={src} width={1200} op={"fit_width"} format={"avif"} />}}?w=75em" />
+    {#- 60em = 960px -#}
+    <source type="{{ source_type }}" media="(min-width: 60em)" srcset="{{<site.thumbnail config i18n url={src} width={960} op={"fit_width"} format={"avif"} />}}?w=60em" />
+    {#- 45em = 720px -#}
+    <source type="{{ source_type }}" media="(min-width: 45em)" srcset="{{<site.thumbnail config i18n url={src} width={720} op={"fit_width"} format={"avif"} />}}?w=45em" />
+    {#- 30em = 500px -#}
+    <source type="{{ source_type }}" media="(min-width: 30em)" srcset="{{<site.thumbnail config i18n url={src} width={500} op={"fit_width"} format={"avif"} />}}?w=30em" />
+    {#- 22em = 360px -#}
+    <source type="{{ source_type }}" media="(min-width: 22em)" srcset="{{<site.thumbnail config i18n url={src} width={360} op={"fit_width"} format={"avif"} />}}?w=22em" />
+    {#- Generate a webp image as fallback if avif is not supported -#}
+    <img class="progressive-content"{% if alt != "" %} alt="{{ alt }}"{% endif %}
+      onload="progressiveLoad(this)" loading="lazy" decoding="async"
+      src="{{<site.thumbnail config i18n url={src} width={500} op={"fit_width"} format={"webp"} />}}?w=30em"
+      srcset="{{<site.thumbnail config i18n url={src} width={360} op={"fit_width"} format={"webp"} />}}?w=22em 360w,
+              {{<site.thumbnail config i18n url={src} width={500} op={"fit_width"} format={"webp"} />}}?w=30em 500w,
+              {{<site.thumbnail config i18n url={src} width={720} op={"fit_width"} format={"webp"} />}}?w=45em 720w,
+              {{<site.thumbnail config i18n url={src} width={960} op={"fit_width"} format={"webp"} />}}?w=60em 960w,
+              {{<site.thumbnail config i18n url={src} width={1200} op={"fit_width"} format={"webp"} />}}?w=75em 1200w"/>
+    {#- a noscript fallback -#}
+    <noscript>
+      <img loading="lazy" decoding="async"{% if alt != "" %} alt="{{ alt }}"{% endif %}
+        src="{{<site.thumbnail config i18n url={src} width={500} op={"fit_width"} format={"webp"} />}}?w=30em">
+    </noscript>
+</picture>
+{% endcomponent %}
+
+
+{# 渐进式加载图片 src 本地路径，无尺寸自适应，用于提供avif和webp支持 #}
+{% component site.img_progressive_loading_single_size(config, i18n, src, alt="", id="", class="", style="", onclick="") %}
+{% set source_url = src or config.extra.site.default_cover or config.extra.site.logo %}
+{% set source_type = "image/webp" %}
+{% if source_url is ending_with(pat=".svg") %}
+    {% set source_type = "image/svg+xml" %}
+{% elif source_url is ending_with(pat=".avif") or config.extra.other?.avif_enable %}
+    {% set source_type = "image/avif" %}
+{% endif %}
+<picture {% if id != "" %}id="{{ id }}" {% endif %} class="progressive-picture{% if class != "" %} {{ class }}{% endif %}"{% if style != "" %} style="{{ style }}"{% endif %}{% if onclick != "" %} onclick="{{ onclick }}"{% endif %}>
+    {#- the small image that will be blurred -#}
+    <img class="progressive-thumbnail" src="{{<site.thumbnail config i18n url={src} width={16} op={"fit_width"} quality={1} />}}" loading="lazy" decoding="async">
+    {#- avif image -#}
+    <source type="{{ source_type }}" media="(min-width: 1em)" srcset="{{<site.thumbnail config i18n url={src} format={"avif"} />}}" />
+    {#- webp image -#}
+    <img class="progressive-content"{% if alt != "" %} alt="{{ alt }}"{% endif %}
+      onload="progressiveLoad(this)" loading="lazy" decoding="async"
+      src="{{<site.thumbnail config i18n url={src} format={"webp"} />}}"/>
+    {#- a noscript fallback -#}
+    <noscript>
+      <img loading="lazy" decoding="async"{% if alt != "" %} alt="{{ alt }}"{% endif %}
+        src="{{<site.thumbnail config i18n url={src} format={"webp"} />}}">
+    </noscript>
+</picture>
+{% endcomponent %}
+
+
+{# 动态加载侧边小组件 #}
+{% component site.render_widget(config, i18n, widget, value) %}
+
+    {% if widget == "author" %}
+        {{<site.author config i18n value={value} />}}
+    {% endif %}
+
+    {% if widget == "header" %}
+        {{<site.header config i18n value={value} />}}
+    {% endif %}
+
+    {% if widget == "event" %}
+        {{<site.event config i18n value={value} />}}
+    {% endif %}
+
+    {% if widget == "product-list" %}
+        {{<site.product_list config i18n value={value} />}}
+    {% endif %}
+
+    {% if widget == "product-single" %}
+        {{<site.product_single config i18n value={value} />}}
+    {% endif %}
+
+    {% if widget == "featured-posts" %}
+        {{<site.featured_posts config i18n value={value} />}}
+    {% endif %}
+
+{% endcomponent %}

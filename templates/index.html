@@ -1,24 +1,23 @@
 {% extends "base.html" %}
-{% import "_macros.html" as macro %}
 
 {% block head %}
-    {{ macro::head_meta_original_title(_permalink = section.path, excerpt = section.description | default(value=config.description), type = 'website') }}
+    {{<site.head_meta_original_title config i18n _permalink={section.path} excerpt={section.description | default(value=config.description)} type={'website'} />}}
 {% endblock %}
 
 {% block content %}
 
     {# 向前兼容：如果 config.extra 中定义了 widgets（旧模式），默认语言使用 config.extra #}
     {# 否则使用 section.extra（front-matter 新模式） #}
-    {% if lang == config.default_language and config.extra.index.widgets is defined %}
+    {% if lang == config.default_language and config.extra.index?.widgets is defined %}
         {% set widgets = config.extra.index.widgets %}
-    {% elif section.extra.index is defined and section.extra.index.widgets is defined %}
-        {% set widgets = section.extra.index.widgets %}
+    {% elif section?.extra?.index is defined and section?.extra?.index.widgets is defined %}
+        {% set widgets = section?.extra?.index.widgets %}
     {% else %}
         {% set widgets = [] %}
     {% endif %}
 
     {% for widget in widgets %}
-    {{ macro::render_widget(widget=widget.type, value=widget.value) }}
+    {{<site.render_widget config i18n widget={widget.type} value={widget.value} />}}
     {% endfor %}
 
 {% endblock content %}

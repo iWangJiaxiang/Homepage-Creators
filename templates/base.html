@@ -1,3 +1,4 @@
+{% set i18n = section?.extra?.i18n | default(value={}) %}
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 
@@ -15,11 +16,11 @@
 
   {% include "partial/layout/footer.html" %}
 
-  {% if config.extra.analytics.umami.enable %}
+  {% if config.extra.analytics?.umami?.enable %}
   {# 名称改为不易被屏蔽的，统计网站访问量 #}
-  <script defer src="{{ config.extra.analytics.umami.js }}" data-website-id="{{ config.extra.analytics.umami.id }}"
-      {% if config.extra.analytics.umami.remote_url %}data-host-url="{{ config.extra.analytics.umami.remote_url | safe }}"{% endif %}
-      {% if config.extra.analytics.umami.domain %}data-domains="{{ config.extra.analytics.umami.domain | safe }}"{% endif %}>
+  <script defer src="{{ config.extra.analytics?.umami.js }}" data-website-id="{{ config.extra.analytics?.umami.id }}"
+      {% if config.extra.analytics?.umami.remote_url %}data-host-url="{{ config.extra.analytics?.umami.remote_url | safe }}"{% endif %}
+      {% if config.extra.analytics?.umami.domain %}data-domains="{{ config.extra.analytics?.umami.domain | safe }}"{% endif %}>
   </script>
   {% endif %}
 </body>

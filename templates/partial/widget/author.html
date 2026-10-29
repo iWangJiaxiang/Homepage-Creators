@@ -2,7 +2,7 @@
 {# title #}
 {# avatar #}
 {# bio #}
-{% macro author(value) %}
+{% component site.author(config, i18n, value) %}
 <div class="avatar-discription">
     <span class="avatar-discription-text">
       <p>
@@ -10,9 +10,9 @@
       </p>
     </span>
     <div class="avatar-info">
-      {{ macro::img_progressive_loading_single_size(src=value.avatar, class="avatar-image") }}
+      {{<site.img_progressive_loading_single_size config i18n src={value.avatar} class={"avatar-image"} />}}
       <span class="avatar-name">{{ value.name }}</span>
       <span class="avatar-title">{{ value.title }}</span>
     </div>
   </div>
-{% endmacro %}
+{% endcomponent %}

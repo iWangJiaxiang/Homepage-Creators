@@ -57,6 +57,8 @@
 
 ## 📝 快速上手
 
+需要 **Zola 0.23.6 或更高版本**。本主题已迁移至 Tera 2，旧版 Zola 无法渲染。升级现有站点前请阅读[升级指南](docs/upgrade-zola-0.23.md)。开发者可参考[浏览器测试指南](docs/browser-testing.md)运行 Playwright 自动化测试。
+
 本章节助你快速运行自己的主页网站，如果打算正式使用本主题，请参阅[正式使用](#正式使用)章节，能获得更好的主题版本更新体验
 
 ### 免费静态页面托管服务
@@ -64,9 +66,9 @@
 #### GitHub Pages
 
 1. [Fork](https://github.com/iWangJiaxiang/Homepage-Creators/fork) 本仓库。
-1. 确保仓库已经包含 `.github/workflows/deploy.yml` 文件，无需额外配置。
+1. 确保仓库已经包含 `.github/workflows/build-gh-pages.yml` 文件，无需额外配置。
 1. 在仓库的 **Actions** 页面启用 `Build GH Pages` 工作流，然后手动触发构建。
-1. 提交更改后，GitHub Actions 将自动构建并部署到 `gh-pages` 分支，等待完成。
+1. 推送提交和 PR 会自动运行构建检查；仅在 `main` 分支手动触发工作流时部署到 `gh-pages` 分支。
 1. 在您的 GitHub 仓库中，进入 **Settings** -> **Pages**，在 **Source** 下拉菜单中选择 `gh-pages` 分支并保存。
 1. 部署完成后，您可以通过 `https://<your-username>.github.io/<repository-name>` 访问您的站点。
 1. 参考[定制主页](#定制主页)章节，定制个人主页
@@ -83,7 +85,7 @@
   - **Build command 构建命令**: 输入 `zola build`。
   - **Build output directory 构建输出**: 输入 `public`。
   - 添加环境变量`UNSTABLE_PRE_BUILD`，填写`asdf plugin add zola https://github.com/salasrod/asdf-zola && asdf install zola $ZOLA_VERSION && asdf global zola $ZOLA_VERSION`
-  - 添加环境变量`ZOLA_VERSION`，填写`0.20.0`
+  - 添加环境变量`ZOLA_VERSION`，填写`0.23.6`
   - 如果这里遇到问题，请参考[官方文档](https://www.getzola.org/documentation/deployment/cloudflare-pages/)
 1. 点击 **Save and Deploy** 按钮，Cloudflare Pages 将开始构建和部署您的站点。
 1. 部署完成后，您可以通过 Cloudflare 提供的域名访问您的站点，或者绑定自定义域名。

@@ -2,3 +2,8 @@
 
 public/*
 static/processed_images/*
+
+node_modules/
+playwright-report/
+test-results/
+__pycache__/

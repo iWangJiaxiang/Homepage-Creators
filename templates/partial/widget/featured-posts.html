@@ -2,11 +2,7 @@
 {# bio #}
 {# style: optional background style #}
 {# columns: title, items(title, url) #}
-{% macro featured_posts(value) %}
-{# 读取 i18n 字符串 #}
-{% if section.extra.i18n is defined %}
-    {% set i18n = section.extra.i18n %}
-{% endif %}
+{% component site.featured_posts(config, i18n, value) %}
 
 <div class="featured-posts-widget" id="{{ value.title }}"{% if value.style %} style="{{ value.style | safe }}"{% endif %}>
     <div class="featured-posts-header need-padding">
@@ -41,4 +37,4 @@
       {% endfor %}
     </div>
 </div>
-{% endmacro %}
+{% endcomponent %}

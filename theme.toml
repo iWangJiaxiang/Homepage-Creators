@@ -2,7 +2,7 @@ name = "homepage-creators"
 description = "A fast and beautiful personal homepage for creators, used by https://jiaxiang.wang, a port of HeoWeb."
 license = "AGPL"
 homepage = "https://github.com/iWangJiaxiang/homepage-for-creators"
-min_version = "0.19.2"
+min_version = "0.23.6"
 demo = "https://jiaxiang.wang/"
 
 [author]

@@ -55,6 +55,8 @@ This theme is easy to use; you only need to modify the `config.toml` file to dyn
 
 ## 📝 Quick Start
 
+Requires **Zola 0.23.6 or newer**. Templates use Tera 2 and no longer work with older Zola versions. See the [upgrade guide](docs/upgrade-zola-0.23.md) before upgrading an existing site. Developers can run Playwright tests using the [browser testing guide](docs/browser-testing.md).
+
 This section helps you quickly run your own homepage website. If you plan to formally use this theme, please refer to the [Formal Usage](#formal-usage) section for a better theme update experience.
 
 ### Free Static Page Hosting Services
@@ -62,9 +64,9 @@ This section helps you quickly run your own homepage website. If you plan to for
 #### GitHub Pages
 
 1. [Fork](https://github.com/iWangJiaxiang/Homepage-Creators/fork) this repository.
-1. Ensure the repository contains the `.github/workflows/deploy.yml` file, no additional configuration needed.
+1. Ensure the repository contains the `.github/workflows/build-gh-pages.yml` file, no additional configuration needed.
 1. Enable the `Build GH Pages` workflow in the repository's **Actions** page, then manually trigger the build.
-1. After committing changes, GitHub Actions will automatically build and deploy to the `gh-pages` branch.
+1. Pushes and pull requests run build checks automatically; deployment to `gh-pages` only happens when manually running the workflow on `main`.
 1. In your GitHub repository, go to **Settings** -> **Pages**, select the `gh-pages` branch in the **Source** dropdown menu and save.
 1. After deployment, you can access your site at `https://<your-username>.github.io/<repository-name>`.
 1. Refer to the [Customize Your Homepage](#customize-your-homepage) section to customize your personal homepage.
@@ -81,7 +83,7 @@ This section helps you quickly run your own homepage website. If you plan to for
   - **Build command**: Enter `zola build`.
   - **Build output directory**: Enter `public`.
   - Add environment variable `UNSTABLE_PRE_BUILD` with value `asdf plugin add zola https://github.com/salasrod/asdf-zola && asdf install zola $ZOLA_VERSION && asdf global zola $ZOLA_VERSION`
-  - Add environment variable `ZOLA_VERSION` with value `0.20.0`
+  - Add environment variable `ZOLA_VERSION` with value `0.23.6`
   - If you encounter any issues, please refer to the [official documentation](https://www.getzola.org/documentation/deployment/cloudflare-pages/)
 1. Click the **Save and Deploy** button, Cloudflare Pages will start building and deploying your site.
 1. After deployment, you can access your site via the Cloudflare-provided domain or bind a custom domain.

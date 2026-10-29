@@ -48,7 +48,7 @@ var homepage = {
 
     function animation(currentTime) {
       if (startTime === null) startTime = currentTime;
-      let timeElapsed = currentTime - startTime;
+      let timeElapsed = Math.min(currentTime - startTime, 600);
       let run = ease(timeElapsed, startPosition, distance, 600);
       window.scrollTo(0, run);
       if (timeElapsed < 600) requestAnimationFrame(animation);
@@ -76,7 +76,7 @@ function scrollToTopWithAnimation() {
     if (!startTime) {
       startTime = currentTime;
     }
-    const timeElapsed = currentTime - startTime;
+    const timeElapsed = Math.min(currentTime - startTime, duration);
     const scrollY = easeInOutQuad(timeElapsed, startPosition, distance, duration);
     window.scrollTo(0, scrollY);
     if (timeElapsed < duration) {
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 添加视差效果
   //var image = document.getElementsByClassName('progressive-content'); bug see: https://github.com/geosigno/simpleParallax.js/issues/64
   var image = document.querySelectorAll('.banner-pic-img  .progressive-content');
-  new simpleParallax(image, {
+  new SimpleParallax(image, {
     orientation: 'up',
     scale: 1.2,
     delay: 2,
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }, false)
 
   //关闭菜单
-  $('.menu-list').click(function () {
+  $('.menu-list').on('click', function () {
     homepage.hideMenu();
   });
 

@@ -9,7 +9,7 @@ Homepage-Creators is a Zola static site generator theme that creates beautiful p
 - **Repository**: https://github.com/iWangJiaxiang/Homepage-Creators
 - **Demo**: https://jiaxiang.wang
 - **License**: AGPL
-- **Min Zola Version**: 0.19.2
+- **Min Zola Version**: 0.23.6
 
 ## Common Commands
 
@@ -20,6 +20,11 @@ zola serve
 # Production build (outputs to public/ folder)
 zola build
 
+# Real browser tests (Node.js + Python 3 + Zola required)
+npm ci
+npx playwright install --with-deps chromium
+npm run test:e2e
+
 # VS Code task also available: "zola serve"
 ```
 
@@ -29,7 +34,7 @@ zola build
 - **Engine**: Tera (Zola's templating language)
 - **Entry point**: `templates/index.html` - iterates over widgets defined in `config.toml`
 - **Base template**: `templates/base.html` - defines HTML structure with head, nav, content, footer blocks
-- **Macros**: `templates/_macros.html` - contains reusable template functions for images, thumbnails, and widget rendering
+- **Components**: `templates/_components.html` - contains globally registered Tera 2 `site.*` components for images, thumbnails, and widget rendering; pass context explicitly (macros/imports are no longer supported)
 
 ### Widget System
 Widgets are modular components defined in `config.toml` under `[[extra.index.widgets]]`. The widget type determines which partial template is rendered:
@@ -42,7 +47,7 @@ Widgets are modular components defined in `config.toml` under `[[extra.index.wid
 | `product-list` | `partial/widget/product-list.html` | Grid of multiple projects/products |
 | `event` | `partial/widget/event.html` | Timeline/event display with background image |
 
-Widget rendering is handled by the `render_widget` macro in `_macros.html`, which dispatches to the appropriate partial based on the widget type.
+Widget rendering is handled by the `render_widget` component in `_components.html`, which dispatches to the appropriate partial based on the widget type.
 
 ### Configuration
 Configuration is split between `config.toml` (global) and front-matter `[extra]` in content files (per-language):
@@ -95,13 +100,13 @@ content/
 ### Image Processing
 The theme includes built-in image optimization:
 - Automatic AVIF/WebP format conversion (controlled by `config.extra.other.avif_enable`)
-- Progressive loading with blur-up effect via `img_progressive_loading` macro
+- Progressive loading with blur-up effect via the `img_progressive_loading` component
 - Responsive srcset generation for multiple viewport sizes
-- Thumbnails generated at build time via Tera's `resize_image` filter
+- Thumbnails generated at build time via Zola's `resize_image` function
 
 ## Deployment
 
-GitHub Actions workflow (`.github/workflows/build-gh-pages.yml`) automatically builds and deploys to GitHub Pages on pushes to main branch using the `shalzz/zola-deploy-action`.
+GitHub Actions workflow (`.github/workflows/build-gh-pages.yml`) checks and builds pushes/PRs using the checksum-verified Zola 0.23.6 binary. Only a manual run on `main` deploys the artifact to `gh-pages` using `peaceiris/actions-gh-pages`.
 
 ## Project Relationship
 

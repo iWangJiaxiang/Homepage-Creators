@@ -1,15 +1,15 @@
-{# 读取 nav 配置：向前兼容 config.extra.nav，否则用 section.extra.nav #}
+{# 读取 nav 配置：向前兼容 config.extra.nav，否则用 section?.extra?.nav #}
 {% if lang == config.default_language and config.extra.nav is defined %}
     {% set nav = config.extra.nav %}
-{% elif section.extra.nav is defined %}
-    {% set nav = section.extra.nav %}
+{% elif section?.extra?.nav is defined %}
+    {% set nav = section?.extra?.nav %}
 {% else %}
     {% set nav = false %}
 {% endif %}
 
 {# 读取 i18n 字符串 #}
-{% if section.extra.i18n is defined %}
-    {% set i18n = section.extra.i18n %}
+{% if section?.extra?.i18n is defined %}
+    {% set i18n = section?.extra?.i18n %}
 {% else %}
     {% set i18n = false %}
 {% endif %}
@@ -26,7 +26,7 @@
     <div class="nav-content">
         <div class="nav-left">
             <a href="javascript:scrollToTopWithAnimation()" class="site-logo">
-                {{ macro::img_progressive_loading_single_size(src=config.extra.site.nav_logo | default(value=config.extra.site.logo), alt="logo", class="site-logo-img") }}
+                {{<site.img_progressive_loading_single_size config i18n src={config.extra.site.nav_logo | default(value=config.extra.site.logo)} alt={"logo"} class={"site-logo-img"} />}}
                 <span class="site-name">{{ config.author }}</span>
             </a>
         </div>
@@ -35,7 +35,7 @@
             {% for menu in nav.center.menus %}
             <a class="nav-item"
                 {% if menu.internal %}
-                href="javascript:homepage.scrollTo('{{ menu.url}}');" 
+                href="javascript:homepage.scrollTo('{{ menu.url}}');"
                 {% else %}
                 href="{{ menu.url}}" target="_blank"
                 {% endif %}
@@ -48,7 +48,7 @@
             {% for menu in nav.right.menus %}
             <a class="nav-item"
                 {% if menu.internal %}
-                href="javascript:homepage.scrollTo('{{ menu.url}}}');" 
+                href="javascript:homepage.scrollTo('{{ menu.url}}');"
                 {% else %}
                 href="{{ menu.url}}" target="_blank"
                 {% endif %}
@@ -80,7 +80,7 @@
     {% for menu in nav.right.menus %}
     <a class="nav-item"
         {% if menu.internal %}
-        href="javascript:homepage.scrollTo('{{ menu.url}}}');" 
+        href="javascript:homepage.scrollTo('{{ menu.url}}');"
         {% else %}
         href="{{ menu.url}}" target="_blank"
         {% endif %}
@@ -91,7 +91,7 @@
     {% for menu in nav.center.menus %}
     <a class="nav-item"
         {% if menu.internal %}
-        href="javascript:homepage.scrollTo('{{ menu.url}}}');" 
+        href="javascript:homepage.scrollTo('{{ menu.url}}');"
         {% else %}
         href="{{ menu.url}}" target="_blank"
         {% endif %}
