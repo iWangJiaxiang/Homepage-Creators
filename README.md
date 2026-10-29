@@ -61,6 +61,31 @@
 
 本章节助你快速运行自己的主页网站，如果打算正式使用本主题，请参阅[正式使用](#正式使用)章节，能获得更好的主题版本更新体验
 
+### Zola 版本要求与旧站迁移
+
+- **最低版本：Zola 0.23.6**，也是本主题当前构建和测试所使用的版本；最低要求已在 `theme.toml` 的 `min_version` 中声明。
+- 模板使用 **Tera 2 组件**，不能搭配 Zola 0.22 及更早版本使用。请勿只更新主题而继续使用旧版构建工具。
+- 本地、GitHub Actions 及 Cloudflare Pages 等托管平台应使用一致的 Zola 版本；托管平台的 `ZOLA_VERSION` 请设为 `0.23.6`。
+
+已有站点建议按以下顺序升级：
+
+1. 备份现有配置和自定义模板，升级 Zola 后运行 `zola --version` 确认版本。
+2. 更新主题，并对照本仓库 `config.toml` 合并配置；不要直接覆盖个人内容。
+3. 删除旧 `[markdown]` 中的 `highlight_code`、`highlight_theme` 等高亮选项。默认无需高亮配置；如需启用，改用：
+
+   ```toml
+   [markdown.highlighting]
+   theme = "github-dark"
+   ```
+
+4. 如覆写过主题模板，将 `{% macro %}` / `{% import %}` / `namespace::macro(...)` 迁移为 Tera 2 组件。主题组件现位于 `templates/_components.html` 和 widget 模板中，使用 `site.*` 命名空间，组件上下文需通过参数传递。
+5. `get_page` / `get_section` 改用不带语言后缀的标准路径及 `lang` 参数；Markdown 正文中的演示用 Tera 语法需用 `{% raw %}…{% endraw %}` 包裹，或配置 `skip_content_templating`。
+6. 运行 `zola check --skip-external-links`、`zola build`、`zola serve`，检查中英文页面、导航、图片与语言切换后再部署。
+
+**页面数据无需整体迁移**：默认语言的旧 `config.extra.index.widgets` 配置仍受支持，多语言页面继续使用 `content/_index.md` / `content/_index.en.md` 中的 `extra` 数据。
+
+完整说明见[升级指南](docs/upgrade-zola-0.23.md)，自定义前端脚本还需注意其中的 jQuery 4 和 simpleParallax 7 API 变更。
+
 ### 免费静态页面托管服务
 
 #### GitHub Pages

@@ -59,6 +59,31 @@ Requires **Zola 0.23.6 or newer**. Templates use Tera 2 and no longer work with 
 
 This section helps you quickly run your own homepage website. If you plan to formally use this theme, please refer to the [Formal Usage](#formal-usage) section for a better theme update experience.
 
+### Zola Requirements and Migration
+
+- **Minimum version: Zola 0.23.6**, also the version used for the current build and tests. This requirement is declared as `min_version` in `theme.toml`.
+- Templates use **Tera 2 components** and do not work with Zola 0.22 or earlier. Do not update the theme without upgrading the build tool.
+- Keep local development, GitHub Actions and hosting environments on the same Zola version. Set hosting `ZOLA_VERSION` to `0.23.6`.
+
+For an existing site:
+
+1. Back up your configuration and custom templates, upgrade Zola, and confirm the version with `zola --version`.
+2. Update the theme and merge configuration changes from this repository's `config.toml`; do not overwrite your personal content.
+3. Remove legacy `[markdown]` options such as `highlight_code` and `highlight_theme`. Highlighting is disabled by default; enable it with the new configuration if needed:
+
+   ```toml
+   [markdown.highlighting]
+   theme = "github-dark"
+   ```
+
+4. If you override theme templates, migrate `{% macro %}`, `{% import %}` and `namespace::macro(...)` to Tera 2 components. Theme components now live in `templates/_components.html` and widget templates, use the `site.*` namespace, and receive context through parameters.
+5. Use canonical paths without language suffixes plus a `lang` argument for `get_page` / `get_section`. Wrap literal Tera examples in Markdown with `{% raw %}…{% endraw %}`, or configure `skip_content_templating`.
+6. Run `zola check --skip-external-links`, `zola build` and `zola serve`. Verify both languages, navigation, images and language switching before deploying.
+
+**Existing page data remains supported**: legacy default-language widgets in `config.extra.index.widgets` still work, and multilingual pages continue using `extra` data in `content/_index.md` / `content/_index.en.md`.
+
+See the [full migration guide](docs/upgrade-zola-0.23.md), including jQuery 4 and simpleParallax 7 API changes if you maintain custom frontend scripts.
+
 ### Free Static Page Hosting Services
 
 #### GitHub Pages

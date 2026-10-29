@@ -1,3 +1,20 @@
+# Zola version requirement / Zola 版本要求
+# Requires Zola >= 0.23.6; this theme uses Tera 2 components.
+# 本主题要求 Zola 0.23.6 或更高版本，不兼容旧版 Zola / Tera 1。
+# Upgrade local Zola, CI and hosting ZOLA_VERSION together with the theme.
+# 升级主题时，请同时升级本地 Zola、CI 和托管平台的 ZOLA_VERSION。
+# Migration / 迁移要点：
+# - Remove old [markdown] highlight_code / highlight_theme settings.
+#   删除旧高亮配置；默认不启用高亮，需要时使用 [markdown.highlighting]。
+# - Migrate custom macros/imports to Tera 2 components (templates/_components.html).
+#   自定义模板需迁移宏及 import，并显式传递组件上下文。
+# - Existing config.extra widgets and multilingual section.extra remain supported.
+#   原有 widgets 配置和多语言 front matter 仍受支持，无需重写页面数据。
+# Full guide / 完整指南：docs/upgrade-zola-0.23.md
+# Verify / 验证：zola --version; zola check --skip-external-links; zola build
+# The minimum theme version is declared in theme.toml, not as a site config key.
+# 最低版本在 theme.toml 的 min_version 中声明，请勿在此添加同名站点配置项。
+
 # The URL the site will be built for
 base_url = "https://jiaxiang.wang"
 
